@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - select
   layers:
   - Default
   - TransparentFX
@@ -43,4 +44,7 @@ TagManager:
     locked: 0
   - name: Candies
     uniqueID: 1934425679
+    locked: 0
+  - name: Selection
+    uniqueID: 4060751653
     locked: 0
