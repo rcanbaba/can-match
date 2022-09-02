@@ -7,7 +7,7 @@ public class createCandy : MonoBehaviour
 
     public GameObject[] preCandies;
     public int width, height;
-    public Candy[,] inGameCandies;
+    public static Candy[,] inGameCandies;
 
     void Start() {
         inGameCandies = new Candy[width,height];
