@@ -14,6 +14,11 @@ public class Candy : MonoBehaviour
     public Vector3 destinationPose;
     public bool isSwapping = false;
 
+    public List<Candy> mathcedRowCandies;
+    public List<Candy> matchedColumnCandies;
+
+    public string color;
+
     void Start()
     {
         selectionTool = GameObject.FindGameObjectWithTag("select");
@@ -72,6 +77,7 @@ public class Candy : MonoBehaviour
             configureSelectedCandiesSwap();
             // swap
             print("SWAP");
+
         } else {
             firstSelectedCandy = secondSelectedCandy;
             secondSelectedCandy = null;
@@ -97,6 +103,8 @@ public class Candy : MonoBehaviour
         secondSelectedCandy.x = tempFirstX;
         secondSelectedCandy.y = tempFirstY;
 
+        checkMatch(firstSelectedCandy);
+
         firstSelectedCandy = null;
         secondSelectedCandy = null;
     }
@@ -105,4 +113,52 @@ public class Candy : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, destinationPose, 0.2f);
     }
 
+    private void checkMatch(Candy candy) { 
+        checkRow(candy);
+        checkColumn(candy);
+    }
+
+    private void checkRow(Candy candy) {
+        print("ROW check");
+        for(int i = (int)candy.x + 1; i < createCandy.inGameCandies.GetLength(0); i++) {
+            Candy rightCandy = createCandy.inGameCandies[i,(int)candy.y];
+            if (rightCandy.color == candy.color) {
+                print("rightCandy match");
+                mathcedRowCandies.Add(rightCandy);
+            } else {
+                break;
+            }
+        }
+        for(int i = (int)candy.x - 1; i > 0; i--) {
+            Candy leftCandy = createCandy.inGameCandies[i,(int)candy.y];
+            if (leftCandy.color == candy.color) {
+                print("leftCandy match");
+                mathcedRowCandies.Add(leftCandy);
+            } else {
+                break;
+            }
+        }
+    }
+
+    private void checkColumn(Candy candy) {
+        print("COLUMN check");
+        for(int i = (int)candy.y + 1; i < createCandy.inGameCandies.GetLength(1); i++) {
+            Candy upCandy = createCandy.inGameCandies[(int)candy.x,i];
+            if (upCandy.color == candy.color) {
+                print("upCandy match");
+                matchedColumnCandies.Add(upCandy);
+            } else {
+                break;
+            }
+        }
+        for(int i = (int)candy.y - 1; i > 0; i--) {
+            Candy downCandy = createCandy.inGameCandies[(int)candy.x,i];
+            if (downCandy.color == candy.color) {
+                print("downCandy match");
+                matchedColumnCandies.Add(downCandy);
+            } else {
+                break;
+            }
+        }
+    }
 }

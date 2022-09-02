@@ -20,8 +20,10 @@ public class createCandy : MonoBehaviour
     }
 
     public void createOneCandy(int x, int y) {
-        GameObject newCandy = GameObject.Instantiate (getRandomCandy (), new Vector2 (x, y+40), Quaternion.identity);
+        GameObject randomCandyObject = getRandomCandy();
+        GameObject newCandy = GameObject.Instantiate (randomCandyObject, new Vector2 (x, y+10), Quaternion.identity);
         Candy candy = newCandy.GetComponent<Candy>();
+        candy.color = randomCandyObject.name;
         candy.enterNewPosition(x,y);
         inGameCandies[x,y] = candy;
     }
