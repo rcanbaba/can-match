@@ -86,6 +86,9 @@ public class Candy : MonoBehaviour
         firstSelectedCandy.destinationPose = secondSelectedCandy.transform.position;
         secondSelectedCandy.destinationPose = firstSelectedCandy.transform.position;
 
+        createCandy.inGameCandies[(int)firstSelectedCandy.x, (int)firstSelectedCandy.y] = secondSelectedCandy;
+        createCandy.inGameCandies[(int)secondSelectedCandy.x, (int)secondSelectedCandy.y] = firstSelectedCandy;
+
         float tempFirstX = firstSelectedCandy.x;
         float tempFirstY = firstSelectedCandy.y;
 
