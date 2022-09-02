@@ -85,6 +85,15 @@ public class Candy : MonoBehaviour
         secondSelectedCandy.isSwapping = true;
         firstSelectedCandy.destinationPose = secondSelectedCandy.transform.position;
         secondSelectedCandy.destinationPose = firstSelectedCandy.transform.position;
+
+        float tempFirstX = firstSelectedCandy.x;
+        float tempFirstY = firstSelectedCandy.y;
+
+        firstSelectedCandy.x = secondSelectedCandy.x;
+        firstSelectedCandy.y = secondSelectedCandy.y;
+        secondSelectedCandy.x = tempFirstX;
+        secondSelectedCandy.y = tempFirstY;
+
         firstSelectedCandy = null;
         secondSelectedCandy = null;
     }
