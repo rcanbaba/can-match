@@ -19,9 +19,12 @@ public class Candy : MonoBehaviour
 
     public string color;
 
+    public Animator animator;
+
     void Start()
     {
         selectionTool = GameObject.FindGameObjectWithTag("select");
+        animator = GetComponent<Animator>();
     }
 
     public void enterNewPosition(float _x, float _y) {
@@ -104,6 +107,10 @@ public class Candy : MonoBehaviour
         secondSelectedCandy.y = tempFirstY;
 
         checkMatch(firstSelectedCandy);
+        checkMatch(secondSelectedCandy);
+
+        StartCoroutine(firstSelectedCandy.destroyCandy());
+        StartCoroutine(secondSelectedCandy.destroyCandy());
 
         firstSelectedCandy = null;
         secondSelectedCandy = null;
@@ -129,7 +136,7 @@ public class Candy : MonoBehaviour
                 break;
             }
         }
-        for(int i = (int)candy.x - 1; i > 0; i--) {
+        for(int i = (int)candy.x - 1; i >= 0; i--) {
             Candy leftCandy = createCandy.inGameCandies[i,(int)candy.y];
             if (leftCandy.color == candy.color) {
                 print("leftCandy match");
@@ -151,7 +158,7 @@ public class Candy : MonoBehaviour
                 break;
             }
         }
-        for(int i = (int)candy.y - 1; i > 0; i--) {
+        for(int i = (int)candy.y - 1; i >= 0; i--) {
             Candy downCandy = createCandy.inGameCandies[(int)candy.x,i];
             if (downCandy.color == candy.color) {
                 print("downCandy match");
@@ -160,5 +167,26 @@ public class Candy : MonoBehaviour
                 break;
             }
         }
+    }
+
+    IEnumerator destroyCandy() {
+        yield return new WaitForSeconds(0.3f);
+        if (mathcedRowCandies.Count >= 2 || matchedColumnCandies.Count >= 2) {
+            animator.SetBool("doNotRemove",true);
+            if (mathcedRowCandies.Count >= 2) {
+                foreach(var item in mathcedRowCandies) {
+                    item.animator.SetBool("doNotRemove",true);
+                }
+            } else {
+                foreach(var item in matchedColumnCandies) {
+                    item.animator.SetBool("doNotRemove",true);
+                }
+            }
+        }
+    }
+
+    public void startDestroyAnimation() {
+        Debug.Log("Anim yok oldu");
+        Destroy(gameObject);
     }
 }
